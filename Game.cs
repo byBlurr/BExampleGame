@@ -1,7 +1,10 @@
 ﻿using BEngine2D;
+using BEngine2D.Entity;
 using BEngine2D.Input;
 using BEngine2D.Render;
 using BEngine2D.Util;
+using BEngine2D.World;
+using BEngine2D.World.Blocks;
 using System;
 using System.Drawing;
 using System.Numerics;
@@ -11,16 +14,26 @@ namespace BExampleGame
     public class Game : BGame
     {
         BTexture2D[] Textures = new BTexture2D[200];
+        BLevel Level;
+        BPlayer Player;
 
         public Game(string title, double fps, double ups) : base(title, fps, ups)
         {
-
         }
         public override void OnLoad()
         {
             base.OnLoad();
-            Textures[0] = BContentPipe.LoadTexture("Textures/tree.png");
-            Textures[1] = BContentPipe.LoadTexture("Textures/grass.png");
+            Textures[0] = BContentPipe.LoadTexture("Textures/terrain_default.png");
+
+            //Level = new BLevel(20, 20);
+            BBlocks.Initialise();
+            Level = new BLevel("Content/Maps/test_map.json");
+            Player = new BPlayer(new Vector2(
+                (Level.playerStartPos.X + 0.5f) * AppInfo.GRIDSIZE, 
+                (Level.playerStartPos.Y + 0.5f) * AppInfo.GRIDSIZE)
+            );
+            //Camera.SetPosition(Player.position);
+            Camera.Zoom = 2.5f;
         }
 
         public override void Draw()
@@ -28,33 +41,51 @@ namespace BExampleGame
             base.Draw();
 
             // Todo: Draw World
+            for (int x = 0; x < Level.Width; x++)
+            {
+                for (int y = 0; y < Level.Height; y++)
+                {
+                    RectangleF source = new RectangleF(0, 0, 0, 0);
 
-            // Draw random ass tree
-            BGraphics.Draw(Textures[0], Vector2.Zero, new Vector2(0.2f), Color.Transparent, new Vector2(0, 256));
-            BGraphics.Draw(Textures[0], Vector2.Zero, new Vector2(0.2f), Color.Transparent, new Vector2(0, 0));
-            BGraphics.Draw(Textures[0], Vector2.Zero, new Vector2(0.2f), Color.Transparent, new Vector2(256, 0));
-            BGraphics.Draw(Textures[1], Vector2.Zero, new Vector2(0.2f), Color.Transparent, new Vector2(256*2, 0));
-            BGraphics.Draw(Textures[1], Vector2.Zero, new Vector2(0.2f), Color.Transparent, new Vector2(256*3, 0));
-            BGraphics.Draw(Textures[1], Vector2.Zero, new Vector2(0.2f), Color.Transparent, new Vector2(256*4, 0));
+                    switch(Level[x,y].Type)
+                    {
+                        case BBlockType.Empty:
+                            source = new RectangleF(0, 0, AppInfo.TILESIZE, AppInfo.TILESIZE);
+                            break;
+                        case BBlockType.Ground:
+                            source = new RectangleF(AppInfo.TILESIZE, 0, AppInfo.TILESIZE, AppInfo.TILESIZE);
+                            break;
+                        case BBlockType.Solid:
+                            source = new RectangleF(AppInfo.TILESIZE * 2, 0, AppInfo.TILESIZE, AppInfo.TILESIZE);
+                            break;
+                    }
+
+                    BGraphics.Draw(Textures[0], new Vector2(x * AppInfo.GRIDSIZE, y * AppInfo.GRIDSIZE), new Vector2((float)AppInfo.GRIDSIZE / AppInfo.TILESIZE), Color.Transparent, Vector2.Zero, source); ;
+                }
+            }
+
+            Player.Draw();
         }
 
         public override void Tick(double delta)
         {
             base.Tick(delta);
-        }
 
-        public override void OnMouseDown(BMouseButton button, System.Numerics.Vector2 position)
-        {
-            base.OnMouseDown(button, position);
+            Player.Update(delta);
 
-            if (button.Equals(BMouseButton.Left))
+            if (Camera.GetDistanceFromLocation(Player.position) > 45.0f) Camera.SetPosition(Player.position, BTweenType.QuadraticInOut, 60);
+
+            /*
+            var LeftClick = BMouseListener.GetButtonStateNow(BMouseButton.Left);
+            if (LeftClick.IsPressed)
             {
-                Vector2 pos = new Vector2(position.X, position.Y);
+                Vector2 pos = new Vector2(LeftClick.Location.X, LeftClick.Location.Y);
                 pos -= new Vector2(Width, Height) / 2f;
                 pos = Camera.ToWorld(pos);
 
                 Camera.SetPosition(pos, BTweenType.QuadraticInOut, 120);
             }
+            */
         }
     }
 }
