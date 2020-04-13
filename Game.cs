@@ -30,7 +30,12 @@ namespace BExampleGame
             // Todo: Draw World
 
             // Draw random ass tree
-            BGraphics.Draw(Textures[0], Vector2.Zero, new Vector2(0.2f), Color.Transparent, new Vector2(10, 50));
+            BGraphics.Draw(Textures[0], Vector2.Zero, new Vector2(0.2f), Color.Transparent, new Vector2(0, 256));
+            BGraphics.Draw(Textures[0], Vector2.Zero, new Vector2(0.2f), Color.Transparent, new Vector2(0, 0));
+            BGraphics.Draw(Textures[0], Vector2.Zero, new Vector2(0.2f), Color.Transparent, new Vector2(256, 0));
+            BGraphics.Draw(Textures[1], Vector2.Zero, new Vector2(0.2f), Color.Transparent, new Vector2(256*2, 0));
+            BGraphics.Draw(Textures[1], Vector2.Zero, new Vector2(0.2f), Color.Transparent, new Vector2(256*3, 0));
+            BGraphics.Draw(Textures[1], Vector2.Zero, new Vector2(0.2f), Color.Transparent, new Vector2(256*4, 0));
         }
 
         public override void Tick(double delta)
