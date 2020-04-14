@@ -33,7 +33,7 @@ namespace BExampleGame
                 (Level.playerStartPos.Y + 0.5f) * AppInfo.GRIDSIZE)
             );
             Camera.SetPosition(Player.position);
-            Camera.Zoom = 2.5f;
+            Camera.Zoom = 2.0f;
         }
 
         public override void Draw()
