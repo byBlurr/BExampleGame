@@ -1,10 +1,11 @@
 ﻿using BEngine2D;
-using BEngine2D.Characters;
 using BEngine2D.Input;
 using BEngine2D.Render;
 using BEngine2D.Util;
 using BEngine2D.World;
 using BEngine2D.World.Blocks;
+using BExampleGame.Entities;
+using BExampleGame.World;
 using System;
 using System.Drawing;
 using System.Numerics;
@@ -13,9 +14,9 @@ namespace BExampleGame
 {
     public class Game : BGame
     {
-        BTexture2D[] Textures = new BTexture2D[200];
+        BTexture[] Textures = new BTexture[200];
         BLevel Level;
-        BPlayer Player;
+        Player Player;
 
         public Game(string title, double fps, double ups) : base(title, fps, ups)
         {
@@ -23,14 +24,14 @@ namespace BExampleGame
         public override void OnLoad()
         {
             base.OnLoad();
-            Textures[0] = BContentPipe.LoadTexture("Textures/terrain_default.png");
 
-            //Level = new BLevel(20, 20);
-            BBlocks.Initialise();
+            Textures[0] = BGraphics.LoadTexture("Textures/terrain_default.png");
+            Blocks.Initialise();
+
             Level = new BLevel("Content/Maps/test_map.json");
-            Player = new BPlayer(new Vector2(
-                (Level.playerStartPos.X + 0.5f) * AppInfo.GRIDSIZE, 
-                (Level.playerStartPos.Y + 0.5f) * AppInfo.GRIDSIZE)
+            Player = new Player(
+                new Vector2((Level.playerStartPos.X + 0.5f) * AppInfo.GRIDSIZE, (Level.playerStartPos.Y + 0.5f) * AppInfo.GRIDSIZE),
+                BGraphics.LoadTexture("Characters/player.png")
             );
             Camera.SetPosition(Player.position);
             Camera.Zoom = 2.0f;
