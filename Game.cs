@@ -1,4 +1,5 @@
 ﻿using BEngine2D;
+using BEngine2D.GameStates;
 using BEngine2D.Input;
 using BEngine2D.Render;
 using BEngine2D.Util;
@@ -12,15 +13,12 @@ using System.Numerics;
 
 namespace BExampleGame
 {
-    public class Game : BGame
+    public class Game : BGameState
     {
         BTexture[] Textures = new BTexture[200];
         BLevel Level;
         Player Player;
 
-        public Game(string title, double fps, double ups) : base(title, fps, ups)
-        {
-        }
         public override void OnLoad()
         {
             base.OnLoad();
@@ -66,7 +64,7 @@ namespace BExampleGame
             if (LeftClick.IsPressed)
             {
                 Vector2 pos = new Vector2(LeftClick.Location.X, LeftClick.Location.Y);
-                pos -= new Vector2(Width, Height) / 2f;
+                pos -= new Vector2(AppSettings.SETTING_WIDTH, AppSettings.SETTING_HEIGHT) / 2f;
                 pos = Camera.ToWorld(pos);
 
                 Camera.SetPosition(pos, BTweenType.QuadraticInOut, 120);
