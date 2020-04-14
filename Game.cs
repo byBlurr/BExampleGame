@@ -15,18 +15,12 @@ namespace BExampleGame
 {
     public class Game : BGameState
     {
-        BTexture[] Textures = new BTexture[200];
-        BLevel Level;
         Player Player;
 
         public override void OnLoad()
         {
             base.OnLoad();
 
-            Textures[0] = BGraphics.LoadTexture("Textures/terrain_default.png");
-            Blocks.Initialise();
-
-            Level = new BLevel("Content/Maps/test_map.json");
             Player = new Player(
                 new Vector2((Level.playerStartPos.X + 0.5f) * AppInfo.GRIDSIZE, (Level.playerStartPos.Y + 0.5f) * AppInfo.GRIDSIZE),
                 BGraphics.LoadTexture("Characters/player.png")
@@ -35,19 +29,19 @@ namespace BExampleGame
             Camera.Zoom = 2.0f;
         }
 
+        public override void InitialiseLevel()
+        {
+            base.InitialiseLevel();
+
+            Textures[0] = BGraphics.LoadTexture("Textures/terrain_default.png");
+            Blocks.Initialise();
+            Level = new BLevel("Content/Maps/test_map.json");
+            
+        }
+
         public override void Draw()
         {
             base.Draw();
-
-            // Todo: Draw World
-            for (int x = 0; x < Level.Width; x++)
-            {
-                for (int y = 0; y < Level.Height; y++)
-                {
-                    RectangleF source = Level[x, y].TexturePosition;
-                    BGraphics.Draw(Textures[0], new Vector2(x * AppInfo.GRIDSIZE, y * AppInfo.GRIDSIZE), new Vector2((float)AppInfo.GRIDSIZE / AppInfo.TILESIZE), Color.Transparent, Vector2.Zero, source); ;
-                }
-            }
 
             Player.Draw();
         }
