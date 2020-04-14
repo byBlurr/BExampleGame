@@ -1,4 +1,5 @@
-﻿using BEngine2D.GameStates;
+﻿using BEngine2D;
+using BEngine2D.GameStates;
 using BEngine2D.Input;
 using BEngine2D.Render;
 using BEngine2D.Util;
@@ -13,9 +14,9 @@ namespace BExampleGame
     {
         Player Player;
 
-        public override void OnLoad()
+        public override void OnLoad(BWindow Window)
         {
-            base.OnLoad();
+            base.OnLoad(Window);
 
             Player = new Player(
                 new Vector2((Level.playerStartPos.X + 0.5f) * AppInfo.GRIDSIZE, (Level.playerStartPos.Y + 0.5f) * AppInfo.GRIDSIZE),
