@@ -1,14 +1,10 @@
-﻿using BEngine2D;
-using BEngine2D.GameStates;
+﻿using BEngine2D.GameStates;
 using BEngine2D.Input;
 using BEngine2D.Render;
 using BEngine2D.Util;
 using BEngine2D.World;
-using BEngine2D.World.Blocks;
 using BExampleGame.Entities;
 using BExampleGame.World;
-using System;
-using System.Drawing;
 using System.Numerics;
 
 namespace BExampleGame
@@ -51,8 +47,6 @@ namespace BExampleGame
             base.Tick(delta);
 
             Player.Update(delta);
-
-            //if (Camera.GetDistanceFromLocation(Player.position) > 45.0f) Camera.SetPosition(Player.position, BTweenType.QuadraticInOut, 60);
 
             var LeftClick = BMouseListener.GetButtonStateNow(BMouseButton.Left);
             if (LeftClick.IsPressed)
