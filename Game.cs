@@ -1,5 +1,5 @@
 ﻿using BEngine2D;
-using BEngine2D.Entity;
+using BEngine2D.Characters;
 using BEngine2D.Input;
 using BEngine2D.Render;
 using BEngine2D.Util;
@@ -32,7 +32,7 @@ namespace BExampleGame
                 (Level.playerStartPos.X + 0.5f) * AppInfo.GRIDSIZE, 
                 (Level.playerStartPos.Y + 0.5f) * AppInfo.GRIDSIZE)
             );
-            //Camera.SetPosition(Player.position);
+            Camera.SetPosition(Player.position);
             Camera.Zoom = 2.5f;
         }
 
@@ -45,21 +45,7 @@ namespace BExampleGame
             {
                 for (int y = 0; y < Level.Height; y++)
                 {
-                    RectangleF source = new RectangleF(0, 0, 0, 0);
-
-                    switch(Level[x,y].Type)
-                    {
-                        case BBlockType.Empty:
-                            source = new RectangleF(0, 0, AppInfo.TILESIZE, AppInfo.TILESIZE);
-                            break;
-                        case BBlockType.Ground:
-                            source = new RectangleF(AppInfo.TILESIZE, 0, AppInfo.TILESIZE, AppInfo.TILESIZE);
-                            break;
-                        case BBlockType.Solid:
-                            source = new RectangleF(AppInfo.TILESIZE * 2, 0, AppInfo.TILESIZE, AppInfo.TILESIZE);
-                            break;
-                    }
-
+                    RectangleF source = Level[x, y].TexturePosition;
                     BGraphics.Draw(Textures[0], new Vector2(x * AppInfo.GRIDSIZE, y * AppInfo.GRIDSIZE), new Vector2((float)AppInfo.GRIDSIZE / AppInfo.TILESIZE), Color.Transparent, Vector2.Zero, source); ;
                 }
             }
@@ -73,9 +59,8 @@ namespace BExampleGame
 
             Player.Update(delta);
 
-            if (Camera.GetDistanceFromLocation(Player.position) > 45.0f) Camera.SetPosition(Player.position, BTweenType.QuadraticInOut, 60);
+            //if (Camera.GetDistanceFromLocation(Player.position) > 45.0f) Camera.SetPosition(Player.position, BTweenType.QuadraticInOut, 60);
 
-            /*
             var LeftClick = BMouseListener.GetButtonStateNow(BMouseButton.Left);
             if (LeftClick.IsPressed)
             {
@@ -84,8 +69,8 @@ namespace BExampleGame
                 pos = Camera.ToWorld(pos);
 
                 Camera.SetPosition(pos, BTweenType.QuadraticInOut, 120);
+                Player.MoveToPosition(pos);
             }
-            */
         }
     }
 }
