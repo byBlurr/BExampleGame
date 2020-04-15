@@ -7,6 +7,7 @@ using BEngine2D.Util;
 using BEngine2D.World;
 using BExampleGame.Entities;
 using BExampleGame.World;
+using System;
 using System.Drawing;
 using System.Numerics;
 
@@ -28,7 +29,7 @@ namespace BExampleGame
 
             // Initialise our camera settings
             Camera.SetPosition(Player.position);
-            Camera.Zoom = 2.0f;
+            Camera.Zoom = 1.0f;
         }
 
         public override void InitialiseLevel()
@@ -42,7 +43,7 @@ namespace BExampleGame
             Blocks.Initialise();
 
             // Initialising our level
-            Level = new BLevel("test_map", "test");
+            Level = new BLevel("test_map");
         }
 
         public override void Draw()
@@ -75,7 +76,9 @@ namespace BExampleGame
                 pos -= new Vector2(AppSettings.SETTING_WIDTH, AppSettings.SETTING_HEIGHT) / 2f;
                 pos = Camera.ToWorld(pos);
 
-                Level.CreateEntity(new BEntity(pos, BGraphics.LoadTexture("Textures/entities_default.png"), new RectangleF(0,0,256,256)));
+                float treeSize = (float)new Random().Next(86, 128);
+                Tree newEntity = new Tree(pos, BGraphics.LoadTexture("Textures/entities_default.png"), new Vector2(treeSize, treeSize), new RectangleF(0, 0, 256f, 256f));
+                Level.CreateEntity(newEntity);
             }
 
             Player.Update(delta);
