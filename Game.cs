@@ -18,10 +18,13 @@ namespace BExampleGame
         {
             base.OnLoad(Window);
 
+            // Initialising our player
             Player = new Player(
                 new Vector2((Level.playerStartPos.X + 0.5f) * AppInfo.GRIDSIZE, (Level.playerStartPos.Y + 0.5f) * AppInfo.GRIDSIZE),
                 BGraphics.LoadTexture("Characters/player.png")
             );
+
+            // Initialise our camera settings
             Camera.SetPosition(Player.position);
             Camera.Zoom = 2.0f;
         }
@@ -30,10 +33,14 @@ namespace BExampleGame
         {
             base.InitialiseLevel();
 
+            // Initialising our textures (We can have up to 255 images. Make the most of this by using sprite sheets.)
             Textures[0] = BGraphics.LoadTexture("Textures/terrain_default.png");
+
+            // Initialising our blocks (We can have up to 254 blocks, id 1 to 254)
             Blocks.Initialise();
+
+            // Initialising our level
             Level = new BLevel("Content/Maps/test_map.json");
-            
         }
 
         public override void Draw()
@@ -47,8 +54,7 @@ namespace BExampleGame
         {
             base.Tick(delta);
 
-            Player.Update(delta);
-
+            // Handle our player and camera movement
             var LeftClick = BMouseListener.GetButtonStateNow(BMouseButton.Left);
             if (LeftClick.IsPressed)
             {
@@ -59,6 +65,8 @@ namespace BExampleGame
                 Camera.SetPosition(pos, BTweenType.QuadraticInOut, 120);
                 Player.MoveToPosition(pos);
             }
+
+            Player.Update(delta);
         }
     }
 }

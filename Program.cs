@@ -19,8 +19,8 @@ namespace BExampleGame
 
             AppSettings.SETTING_UPS = 30.0f;
 
-            Game game = new Game();
-            BLauncher launcher = new BLauncher(game);
+            Menu menu = new Menu();
+            BLauncher launcher = new BLauncher(menu);
         }
     }
 }
