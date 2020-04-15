@@ -40,7 +40,7 @@ namespace BExampleGame
             Blocks.Initialise();
 
             // Initialising our level
-            Level = new BLevel("Content/Maps/test_map.json");
+            Level = new BLevel("test_map", "test");
         }
 
         public override void Draw()

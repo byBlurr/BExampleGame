@@ -19,8 +19,8 @@ namespace BExampleGame.Entities
 
         public void InitialiseSprites()
         {
-            var spriteWidth = spriteSheet.Width / 6f;
-            var spriteHeight = spriteSheet.Height / 9f;
+            var spriteWidth = spritesheet.Width / 6f;
+            var spriteHeight = spritesheet.Height / 9f;
             idleSprites = new RectangleF[]
             {
                 new RectangleF(0, 0, spriteWidth, spriteHeight),

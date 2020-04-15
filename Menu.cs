@@ -1,5 +1,6 @@
 ﻿using BEngine2D;
 using BEngine2D.GameStates;
+using BEngine2D.Render;
 using BEngine2D.UI;
 using System;
 using System.Collections.Generic;
@@ -26,8 +27,8 @@ namespace BExampleGame
 
             // Initialise our menu buttons
             BMenuButton[] buttons = new BMenuButton[] {
-                new BMenuButton(SwitchState, 300f, 300f, 150f, 60f),
-                new BMenuButton(Window.ExitWindow, 300f, 380f, 150f, 60f)
+                new BMenuButton(SwitchState, BGraphics.LoadTexture("Textures/Menu/play.png"), 300f, 300f, 250f, 60f),
+                new BMenuButton(Window.ExitWindow, BGraphics.LoadTexture("Textures/Menu/quit.png"), 300f, 380f, 250f, 60f)
             };
             InitialiseMenu(buttons);
         }
