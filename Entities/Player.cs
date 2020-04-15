@@ -8,7 +8,6 @@ namespace BExampleGame.Entities
 {
     public class Player : BPlayableCharacter
     {
-
         private RectangleF[] idleSprites, rSprites, ruSprites, rdSprites, lSprites, luSprites, ldSprites, uSprites, dSprites;
         float spriteId;
 

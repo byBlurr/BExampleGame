@@ -80,7 +80,6 @@
     <Compile Include="World\Blocks.cs" />
     <Compile Include="Entities\Player.cs" />
     <Compile Include="Game.cs" />
-    <Compile Include="Input.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">

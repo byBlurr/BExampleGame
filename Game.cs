@@ -65,7 +65,7 @@ namespace BExampleGame
                 pos -= new Vector2(AppSettings.SETTING_WIDTH, AppSettings.SETTING_HEIGHT) / 2f;
                 pos = Camera.ToWorld(pos);
 
-                Camera.SetPosition(pos, BTweenType.QuadraticInOut, 120);
+                Camera.SetPosition(pos, BTweenType.QuadraticInOut, 30);
                 Player.MoveToPosition(pos);
             }
 
@@ -76,9 +76,22 @@ namespace BExampleGame
                 pos -= new Vector2(AppSettings.SETTING_WIDTH, AppSettings.SETTING_HEIGHT) / 2f;
                 pos = Camera.ToWorld(pos);
 
+                while (Level.GetEntity(pos, 32f) != null)
+                    Level.DisposeEntity(Level.GetEntity(pos));
+
                 float treeSize = (float)new Random().Next(86, 128);
                 Tree newEntity = new Tree(pos, BGraphics.LoadTexture("Textures/entities_default.png"), new Vector2(treeSize, treeSize), new RectangleF(0, 0, 256f, 256f));
                 Level.CreateEntity(newEntity);
+            }
+
+            int ScrollWheel = BMouseListener.GetScrollWheelNow();
+            if (ScrollWheel != 0)
+            {
+                if (ScrollWheel < 0) Camera.Zoom = Camera.Zoom - 0.075f;
+                else if (ScrollWheel > 0) Camera.Zoom = Camera.Zoom + 0.075f;
+
+                if (Camera.Zoom > 1.25f) Camera.Zoom = 1.25f;
+                else if (Camera.Zoom < 0.75f) Camera.Zoom = 0.75f;
             }
 
             Player.Update(delta);
