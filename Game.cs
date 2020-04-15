@@ -1,4 +1,5 @@
 ﻿using BEngine2D;
+using BEngine2D.Entities;
 using BEngine2D.GameStates;
 using BEngine2D.Input;
 using BEngine2D.Render;
@@ -6,6 +7,7 @@ using BEngine2D.Util;
 using BEngine2D.World;
 using BExampleGame.Entities;
 using BExampleGame.World;
+using System.Drawing;
 using System.Numerics;
 
 namespace BExampleGame
@@ -64,6 +66,16 @@ namespace BExampleGame
 
                 Camera.SetPosition(pos, BTweenType.QuadraticInOut, 120);
                 Player.MoveToPosition(pos);
+            }
+
+            var RightClick = BMouseListener.GetButtonStateNow(BMouseButton.Right);
+            if (RightClick.IsPressed)
+            {
+                Vector2 pos = new Vector2(RightClick.Location.X, RightClick.Location.Y);
+                pos -= new Vector2(AppSettings.SETTING_WIDTH, AppSettings.SETTING_HEIGHT) / 2f;
+                pos = Camera.ToWorld(pos);
+
+                Level.CreateEntity(new BEntity(pos, BGraphics.LoadTexture("Textures/entities_default.png"), new RectangleF(0,0,256,256)));
             }
 
             Player.Update(delta);
