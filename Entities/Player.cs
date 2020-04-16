@@ -119,8 +119,10 @@ namespace BExampleGame.Entities
 
             if (CurrentState != BEntityState.Idle)
             {
-                if (velocity.X > 0.0f) spriteId += (float)velocity.X / 30f;
-                else if (velocity.X < 0.0f) spriteId += -((float)velocity.X) / 30f;
+                if (currentState == BEntityState.MovingR) spriteId += (float)velocity.X / 100f;
+                else if (currentState == BEntityState.MovingL) spriteId += -((float)velocity.X) / 100f;
+                else if (currentState == BEntityState.MovingD) spriteId += (float)velocity.Y / 100f;
+                else if (currentState == BEntityState.MovingU) spriteId += -((float)velocity.Y) / 100f;
 
                 if (spriteId > 5.0f || spriteId < 0.0f) spriteId = 0f;
             }
