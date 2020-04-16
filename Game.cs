@@ -89,6 +89,8 @@ namespace BExampleGame
                 if (Camera.Zoom > 1.25f) Camera.Zoom = 1.25f;
                 else if (Camera.Zoom < 0.75f) Camera.Zoom = 0.75f;
             }
+
+            if (BKeyboardListener.IsKeyJustPressed(BKey.F8)) AppSettings.SETTING_DEBUG = !AppSettings.SETTING_DEBUG;
         }
     }
 }
