@@ -78,6 +78,7 @@ namespace BExampleGame
                 float treeSize = (float)new Random().Next(86, 128);
                 Tree newEntity = new Tree(pos, BGraphics.LoadTexture("Textures/entities_default.png"), new Vector2(treeSize, treeSize), new RectangleF(0, 0, 256f, 256f));
                 Level.CreateEntity(newEntity);
+                NavMesh.Update(Level);
             }
 
             int ScrollWheel = BMouseListener.GetScrollWheelNow();
@@ -90,7 +91,12 @@ namespace BExampleGame
                 else if (Camera.Zoom < 0.75f) Camera.Zoom = 0.75f;
             }
 
-            if (BKeyboardListener.IsKeyJustPressed(BKey.F8)) AppSettings.SETTING_DEBUG = !AppSettings.SETTING_DEBUG;
+            if (BKeyboardListener.IsKeyJustPressed(BKey.F8)) AppSettings.SETTING_COLLISION_DEBUG = !AppSettings.SETTING_COLLISION_DEBUG;
+            if (BKeyboardListener.IsKeyJustPressed(BKey.F7))
+            {
+                NavMesh.Update(Level);
+                AppSettings.SETTING_NAVIGATION_DEBUG = !AppSettings.SETTING_NAVIGATION_DEBUG;
+            }
         }
     }
 }

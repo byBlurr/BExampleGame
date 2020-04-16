@@ -32,7 +32,7 @@ namespace BExampleGame.Entities
                 currentSprite
             ); 
 
-            if (AppSettings.SETTING_DEBUG) BGraphics.DrawCollisionBox(this.position - (new Vector2(CollisionBox.Width, CollisionBox.Height) / 2f), CollisionBox);
+            if (AppSettings.SETTING_COLLISION_DEBUG) BGraphics.DrawRec(this.position - (new Vector2(CollisionBox.Width, CollisionBox.Height) / 2f), CollisionBox, Color.AliceBlue);
         }
     }
 }
