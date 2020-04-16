@@ -28,7 +28,7 @@ namespace BExampleGame
             );
 
             // Initialise the navmesh
-            this.NavMesh = new BNavigationGrid(0, 0, Level.Width, Level.Height, AppInfo.GRIDSIZE, (int)Player.CollisionBox.Width, (int)Player.CollisionBox.Height);
+            this.NavMesh = new BNavigationGrid(0, 0, Level.Width, Level.Height, AppInfo.GRIDSIZE, (int)(Player.CollisionBox.Width * 1.5f), (int)(Player.CollisionBox.Height * 1.5f));
             NavMesh.Update(Level);
 
 
@@ -71,7 +71,8 @@ namespace BExampleGame
                 Camera.SetPosition(pos, BTweenType.QuadraticInOut, 30);
 
                 //Player.MoveToPosition(pos);
-                Player.FollowPath(NavMesh.FindPathTo(Player.position, pos));
+                NavMesh.FindPathTo(Player.position, pos);
+                Player.FollowPath(NavMesh);
             }
 
             var RightClick = BMouseListener.GetButtonStateNow(BMouseButton.Right);
