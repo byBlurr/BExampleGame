@@ -1,4 +1,5 @@
 ﻿using BEngine2D;
+using BEngine2D.AI.Navigation;
 using BEngine2D.Entities;
 using BEngine2D.GameStates;
 using BEngine2D.Input;
@@ -22,8 +23,14 @@ namespace BExampleGame
             // Initialising our player
             Player = new Player(
                 new Vector2((Level.playerStartPos.X + 0.5f) * AppInfo.GRIDSIZE, (Level.playerStartPos.Y + 0.5f) * AppInfo.GRIDSIZE),
-                BGraphics.LoadTexture("Characters/player.png")
+                BGraphics.LoadTexture("Characters/player.png"),
+                BMovementType.FollowPath
             );
+
+            // Initialise the navmesh
+            this.NavMesh = new BNavigationGrid(0, 0, Level.Width, Level.Height, AppInfo.GRIDSIZE, (int)Player.CollisionBox.Width, (int)Player.CollisionBox.Height);
+            NavMesh.Update(Level);
+
 
             // Initialise our camera settings
             Camera.SetPosition(Player.position);
@@ -62,7 +69,9 @@ namespace BExampleGame
                 pos = Camera.ToWorld(pos);
 
                 Camera.SetPosition(pos, BTweenType.QuadraticInOut, 30);
-                Player.MoveToPosition(pos);
+
+                //Player.MoveToPosition(pos);
+                Player.FollowPath(NavMesh.FindPathTo(Player.position, pos));
             }
 
             var RightClick = BMouseListener.GetButtonStateNow(BMouseButton.Right);
@@ -97,6 +106,7 @@ namespace BExampleGame
                 NavMesh.Update(Level);
                 AppSettings.SETTING_NAVIGATION_DEBUG = !AppSettings.SETTING_NAVIGATION_DEBUG;
             }
+            if (BKeyboardListener.IsKeyJustPressed(BKey.F6)) AppSettings.SETTING_PATHFINDING_DEBUG = !AppSettings.SETTING_PATHFINDING_DEBUG;
         }
     }
 }

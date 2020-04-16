@@ -12,13 +12,13 @@ namespace BExampleGame.Entities
         private RectangleF[] idleSprites, rSprites, ruSprites, rdSprites, lSprites, luSprites, ldSprites, uSprites, dSprites;
         float spriteId;
 
-        public Player(Vector2 position, BTexture spriteSheet, BMovementType movementType = BMovementType.MoveToPosition) : base(position, spriteSheet)
+        public Player(Vector2 position, BTexture spriteSheet, BMovementType movementType = BMovementType.FollowPath) : base(position, spriteSheet)
         {
             var collisionWidth = size.X * 0.85f;
             var collisionHeight = size.Y * 0.5f;
 
             collisionBox = new RectangleF(0f - (size.X / 2f), (0f - (size.Y / 2f)) + collisionHeight, collisionWidth, collisionHeight);
-
+            this.movementType = movementType;
             InitialiseSprites();
         }
 
