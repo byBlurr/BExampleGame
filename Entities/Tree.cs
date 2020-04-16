@@ -1,5 +1,6 @@
 ﻿using BEngine2D.Entities;
 using BEngine2D.Render;
+using BEngine2D.Util;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -14,6 +15,10 @@ namespace BExampleGame.Entities
     {
         public Tree(Vector2 position, BTexture spriteSheet, Vector2 size, RectangleF spriteBox) : base(position, spriteSheet, size, spriteBox)
         {
+            var collisionWidth = size.X / 14;
+            var collisionHeight = size.Y / 5;
+
+            collisionBox = new RectangleF(0f, 0f - (collisionHeight/2f), collisionWidth, collisionHeight);
         }
 
         public override void Draw()
@@ -25,7 +30,9 @@ namespace BExampleGame.Entities
                 Color.Transparent,
                 Vector2.Zero,
                 currentSprite
-            );
+            ); 
+
+            if (AppSettings.SETTING_DEBUG) BGraphics.DrawCollisionBox(this.position - (new Vector2(CollisionBox.Width, CollisionBox.Height) / 2f), CollisionBox);
         }
     }
 }

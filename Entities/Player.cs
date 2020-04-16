@@ -1,5 +1,6 @@
 ﻿using BEngine2D.Entities;
 using BEngine2D.Render;
+using BEngine2D.World;
 using System;
 using System.Drawing;
 using System.Numerics;
@@ -13,6 +14,11 @@ namespace BExampleGame.Entities
 
         public Player(Vector2 position, BTexture spriteSheet, BMovementType movementType = BMovementType.MoveToPosition) : base(position, spriteSheet)
         {
+            var collisionWidth = size.X * 0.85f;
+            var collisionHeight = size.Y * 0.5f;
+
+            collisionBox = new RectangleF(0f - (size.X / 2f), (0f - (size.Y / 2f)) + collisionHeight, collisionWidth, collisionHeight);
+
             InitialiseSprites();
         }
 
@@ -120,9 +126,9 @@ namespace BExampleGame.Entities
             }
         }
 
-        public override void Update(double delta)
+        public override void Update(double delta, BLevel level)
         {
-            base.Update(delta);
+            base.Update(delta, level);
 
             UpdateSprite();
         }

@@ -15,8 +15,6 @@ namespace BExampleGame
 {
     public class Game : BGameState
     {
-        Player Player;
-
         public override void OnLoad(BWindow Window)
         {
             base.OnLoad(Window);
@@ -49,8 +47,6 @@ namespace BExampleGame
         public override void Draw()
         {
             base.Draw();
-
-            Player.Draw();
         }
 
         public override void Tick(double delta)
@@ -93,8 +89,6 @@ namespace BExampleGame
                 if (Camera.Zoom > 1.25f) Camera.Zoom = 1.25f;
                 else if (Camera.Zoom < 0.75f) Camera.Zoom = 0.75f;
             }
-
-            Player.Update(delta);
         }
     }
 }
