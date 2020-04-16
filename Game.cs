@@ -28,13 +28,17 @@ namespace BExampleGame
             );
 
             // Initialise the navmesh
-            this.NavMesh = new BNavigationGrid(0, 0, Level.Width, Level.Height, AppInfo.GRIDSIZE, (int)(Player.CollisionBox.Width * 1.5f), (int)(Player.CollisionBox.Height * 1.5f));
+            this.NavMesh = new BNavigationGrid(0, 0, Level.Width, Level.Height, AppInfo.GRIDSIZE, (int)(Player.CollisionBox.Width * 1.25f), (int)(Player.CollisionBox.Height * 1.25f));
             NavMesh.Update(Level);
 
 
             // Initialise our camera settings
             Camera.SetPosition(Player.position);
             Camera.Zoom = 1.0f;
+
+            // Lets put some fences in the game
+            for (int i = 0; i < 6; i++)
+                Level.CreateEntity(new Fence(new Vector2(500 + (i*32),600), Textures[1], new Vector2(32f), new RectangleF(256f, 0, 256f, 256f)));
         }
 
         public override void InitialiseLevel()
@@ -43,6 +47,7 @@ namespace BExampleGame
 
             // Initialising our textures (We can have up to 255 images. Make the most of this by using sprite sheets.)
             Textures[0] = BGraphics.LoadTexture("Textures/terrain_default.png");
+            Textures[1] = BGraphics.LoadTexture("Textures/entities_default.png");
 
             // Initialising our blocks (We can have up to 254 blocks, id 1 to 254)
             Blocks.Initialise();
@@ -86,7 +91,7 @@ namespace BExampleGame
                     Level.DisposeEntity(Level.GetEntity(pos));
 
                 float treeSize = (float)new Random().Next(86, 128);
-                Tree newEntity = new Tree(pos, BGraphics.LoadTexture("Textures/entities_default.png"), new Vector2(treeSize, treeSize), new RectangleF(0, 0, 256f, 256f));
+                Tree newEntity = new Tree(pos, Textures[1], new Vector2(treeSize, treeSize), new RectangleF(0, 0, 256f, 256f));
                 Level.CreateEntity(newEntity);
                 NavMesh.Update(Level);
             }
